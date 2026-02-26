@@ -31,7 +31,9 @@ async function bootstrap() {
   );
   app.use('/api/v1/webhook', express.raw({ type: 'application/json' }));
 
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api/v1',{
+    exclude:['']
+  });
   app.useGlobalInterceptors(new UtilsInterceptor());
   const httpAdapterHost = app.get(HttpAdapterHost);
   app.useGlobalFilters(new GlobalExceptionFilter(httpAdapterHost));
