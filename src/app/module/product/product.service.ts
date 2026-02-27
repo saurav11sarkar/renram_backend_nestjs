@@ -3,7 +3,6 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from './entities/product.entity';
-import { ProductModule } from './product.module';
 import { User, UserDocument } from '../user/entities/user.entity';
 import { Model } from 'mongoose';
 import { fileUpload } from 'src/app/helper/fileUploder';
