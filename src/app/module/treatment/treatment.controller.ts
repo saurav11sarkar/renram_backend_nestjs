@@ -39,7 +39,12 @@ export class TreatmentController {
 
   @Get()
   async getAllTreatment(@Req() req: Request) {
-    const filters = pick(req.query, ['searchTerm', 'name', 'description']);
+    const filters = pick(req.query, [
+      'searchTerm',
+      'name',
+      'description',
+      'category',
+    ]);
     const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
     const result = await this.treatmentService.getAllTreatment(
       filters,

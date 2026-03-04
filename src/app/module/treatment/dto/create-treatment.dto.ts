@@ -25,6 +25,9 @@ export class CreateTreatmentDto {
   name: string;
 
   @IsString()
+  category: string;
+
+  @IsString()
   description: string;
 
   @IsOptional()

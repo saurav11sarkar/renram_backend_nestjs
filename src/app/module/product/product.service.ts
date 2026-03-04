@@ -45,7 +45,13 @@ export class ProductService {
     const { searchTerm, ...filterData } = params;
 
     const andCondition: any[] = [];
-    const searchAbleFields = ['name', 'description', 'whatWillYouGet', 'size'];
+    const searchAbleFields = [
+      'name',
+      'description',
+      'whatWillYouGet',
+      'size',
+      'category',
+    ];
 
     if (searchTerm) {
       andCondition.push({

@@ -14,6 +14,10 @@ export class CreateProductDto {
   name: string;
 
   @IsString()
+  @IsNotEmpty({ message: 'Product category is required' })
+  category: string;
+
+  @IsString()
   @IsNotEmpty({ message: 'Product description is required' })
   description: string;
 
@@ -43,7 +47,9 @@ export class CreateProductDto {
         try {
           const parsed = JSON.parse(trimmed);
           if (Array.isArray(parsed)) return parsed.map(String);
-        } catch (e) {}
+        } catch (e) {
+          // JSON parse failed, continue with string split
+        }
       }
 
       return trimmed

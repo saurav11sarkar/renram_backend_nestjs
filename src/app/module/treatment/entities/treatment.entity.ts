@@ -7,6 +7,10 @@ export type TreatmentDocment = HydratedDocument<Treatment>;
 export class Treatment {
   @Prop()
   name: string;
+
+  @Prop()
+  category: string;
+
   @Prop()
   description: string;
 

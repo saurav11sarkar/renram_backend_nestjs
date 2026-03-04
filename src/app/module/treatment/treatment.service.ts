@@ -36,7 +36,7 @@ export class TreatmentService {
     const { searchTerm, ...filterData } = params;
 
     const andCondition: any[] = [];
-    const searchAbleFields = ['name', 'description'];
+    const searchAbleFields = ['name', 'description', 'category'];
 
     if (searchTerm) {
       andCondition.push({

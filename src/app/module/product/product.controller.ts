@@ -36,7 +36,7 @@ export class ProductController {
     @UploadedFiles() files: Express.Multer.File[],
   ) {
     const userId = req.user!.id;
-  
+
     const result = await this.productService.createProduct(
       userId,
       createProductDto,
@@ -58,6 +58,7 @@ export class ProductController {
       'description',
       'whatWillYouGet',
       'size',
+      'category',
     ]);
     const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
     const result = await this.productService.getAllProduct(filters, options);
