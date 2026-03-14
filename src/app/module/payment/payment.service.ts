@@ -128,7 +128,9 @@ export class PaymentService {
       .find(whereConditions)
       .sort({ [sortBy]: sortOrder } as any)
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .populate('user', 'name email')
+      .populate('items.product', 'name');
 
     const total = await this.paymentModel.countDocuments(whereConditions);
 
