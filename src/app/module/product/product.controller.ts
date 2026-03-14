@@ -18,6 +18,8 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { ProductService } from './product.service';
@@ -96,6 +98,79 @@ export class ProductController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Get all products with search, filters, pagination, and sorting',
+  })
+  @ApiQuery({
+    name: 'searchTerm',
+    required: false,
+    type: String,
+    example: 'oil',
+    description: 'Search by product name, description, whatWillYouGet, or size',
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+    example: 'Hair Growth Oil',
+    description: 'Filter by exact product name',
+  })
+  @ApiQuery({
+    name: 'description',
+    required: false,
+    type: String,
+    example: 'Supports healthy hair growth',
+    description: 'Filter by exact description value',
+  })
+  @ApiQuery({
+    name: 'whatWillYouGet',
+    required: false,
+    type: String,
+    example: 'usage guide',
+    description: 'Filter by exact whatWillYouGet value',
+  })
+  @ApiQuery({
+    name: 'size',
+    required: false,
+    type: String,
+    example: '100ml',
+    description: 'Filter by size value',
+  })
+  @ApiQuery({
+    name: 'category',
+    required: false,
+    type: String,
+    example: 'hair-care',
+    description: 'Filter by exact category',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    example: 1,
+    description: 'Page number. Default is 1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    example: 10,
+    description: 'Items per page. Default is 10',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    type: String,
+    example: 'createdAt',
+    description: 'Sort field. Default is createdAt',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    enum: ['asc', 'desc'],
+    example: 'desc',
+    description: 'Sort order. Default is desc',
+  })
   @HttpCode(HttpStatus.OK)
   async getAllProducts(@Req() req: Request) {
     const filters = pick(req.query, [
@@ -116,6 +191,12 @@ export class ProductController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get single product by id' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '67d3f5d5a3c1c82c1d123456',
+  })
   @HttpCode(HttpStatus.OK)
   async getSingleProduct(@Param('id') id: string) {
     const result = await this.productService.getSingleProduct(id);

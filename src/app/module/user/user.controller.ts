@@ -13,7 +13,13 @@ import {
   Req,
   Put,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -48,6 +54,94 @@ export class UserController {
   @Get('all-users')
   @UseGuards(AuthGuard('admin'))
   @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: 'Get all users with search, filters, pagination, and sorting',
+  })
+  @ApiQuery({
+    name: 'searchTerm',
+    required: false,
+    type: String,
+    example: 'saurav',
+    description:
+      'Search by firstName, lastName, phoneNumber, email, role, address, or gender',
+  })
+  @ApiQuery({
+    name: 'firstName',
+    required: false,
+    type: String,
+    example: 'Saurav',
+    description: 'Filter by first name',
+  })
+  @ApiQuery({
+    name: 'lastName',
+    required: false,
+    type: String,
+    example: 'Das',
+    description: 'Filter by last name',
+  })
+  @ApiQuery({
+    name: 'phoneNumber',
+    required: false,
+    type: String,
+    example: '01700000000',
+    description: 'Filter by phone number',
+  })
+  @ApiQuery({
+    name: 'email',
+    required: false,
+    type: String,
+    example: 'saurav@example.com',
+    description: 'Filter by email',
+  })
+  @ApiQuery({
+    name: 'role',
+    required: false,
+    type: String,
+    example: 'user',
+    description: 'Filter by role',
+  })
+  @ApiQuery({
+    name: 'address',
+    required: false,
+    type: String,
+    example: 'Dhaka',
+    description: 'Filter by address',
+  })
+  @ApiQuery({
+    name: 'gender',
+    required: false,
+    type: String,
+    example: 'male',
+    description: 'Filter by gender',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    example: 1,
+    description: 'Page number. Default is 1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    example: 10,
+    description: 'Items per page. Default is 10',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    type: String,
+    example: 'createdAt',
+    description: 'Sort field. Default is createdAt',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    enum: ['asc', 'desc'],
+    example: 'desc',
+    description: 'Sort order. Default is desc',
+  })
   @HttpCode(HttpStatus.OK)
   async findAllUsers(@Req() req: Request) {
     const filters = pick(req.query, [
@@ -104,6 +198,12 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get single user by id' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '67d3f5d5a3c1c82c1d123456',
+  })
   @HttpCode(HttpStatus.OK)
   async findSingleUser(@Param('id') id: string) {
     const result = await this.userService.getSingleUser(id);

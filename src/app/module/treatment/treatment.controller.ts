@@ -11,7 +11,13 @@ import {
   HttpStatus,
   Put,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { TreatmentService } from './treatment.service';
 import { CreateTreatmentDto } from './dto/create-treatment.dto';
 import { UpdateTreatmentDto } from './dto/update-treatment.dto';
@@ -41,6 +47,65 @@ export class TreatmentController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Get all treatments with search, filters, pagination, and sorting',
+  })
+  @ApiQuery({
+    name: 'searchTerm',
+    required: false,
+    type: String,
+    example: 'hair',
+    description: 'Search by treatment name, description, or category',
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+    example: 'Hair Treatment',
+    description: 'Filter by exact treatment name',
+  })
+  @ApiQuery({
+    name: 'description',
+    required: false,
+    type: String,
+    example: 'healthy scalp',
+    description: 'Filter by exact description value',
+  })
+  @ApiQuery({
+    name: 'category',
+    required: false,
+    type: String,
+    example: 'hair-care',
+    description: 'Filter by exact category',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    example: 1,
+    description: 'Page number. Default is 1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    example: 10,
+    description: 'Items per page. Default is 10',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    type: String,
+    example: 'createdAt',
+    description: 'Sort field. Default is createdAt',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    enum: ['asc', 'desc'],
+    example: 'desc',
+    description: 'Sort order. Default is desc',
+  })
   async getAllTreatment(@Req() req: Request) {
     const filters = pick(req.query, [
       'searchTerm',
@@ -62,6 +127,12 @@ export class TreatmentController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get single treatment by id' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '67d3f5d5a3c1c82c1d123456',
+  })
   async getSingleTreatment(@Param('id') id: string) {
     const result = await this.treatmentService.getSingleTreatment(id);
 

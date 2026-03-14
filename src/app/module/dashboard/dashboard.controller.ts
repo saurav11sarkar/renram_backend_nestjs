@@ -6,7 +6,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { DashboardService } from './dashboard.service';
 import AuthGuard from 'src/app/middlewares/auth.guard';
 
@@ -33,6 +33,23 @@ export class DashboardController {
   @Get('sales-report')
   @UseGuards(AuthGuard('admin'))
   @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: 'Get sales report by week or by year',
+  })
+  @ApiQuery({
+    name: 'range',
+    required: false,
+    enum: ['week', 'year'],
+    example: 'week',
+    description: 'Report range. Use week or year',
+  })
+  @ApiQuery({
+    name: 'year',
+    required: false,
+    type: Number,
+    example: 2026,
+    description: 'Required when range=year',
+  })
   @HttpCode(HttpStatus.OK)
   async getSalesReport(
     @Query('range') range: RangeType,

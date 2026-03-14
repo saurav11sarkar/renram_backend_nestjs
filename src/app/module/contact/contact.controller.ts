@@ -10,7 +10,13 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ContactService } from './contact.service';
 import { CreateContactDto } from './dto/create-contact.dto';
 import AuthGuard from 'src/app/middlewares/auth.guard';
@@ -36,6 +42,72 @@ export class ContactController {
   @Get()
   @UseGuards(AuthGuard('admin'))
   @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: 'Get all contacts with search, filters, pagination, and sorting',
+  })
+  @ApiQuery({
+    name: 'searchTerm',
+    required: false,
+    type: String,
+    example: 'support',
+    description: 'Search by name, message, email, or phone number',
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+    example: 'Saurav',
+    description: 'Filter by exact name',
+  })
+  @ApiQuery({
+    name: 'message',
+    required: false,
+    type: String,
+    example: 'Need help with order',
+    description: 'Filter by exact message',
+  })
+  @ApiQuery({
+    name: 'email',
+    required: false,
+    type: String,
+    example: 'saurav@example.com',
+    description: 'Filter by exact email',
+  })
+  @ApiQuery({
+    name: 'phoneNumber',
+    required: false,
+    type: String,
+    example: '01700000000',
+    description: 'Filter by exact phone number',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    example: 1,
+    description: 'Page number. Default is 1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    example: 10,
+    description: 'Items per page. Default is 10',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    type: String,
+    example: 'createdAt',
+    description: 'Sort field. Default is createdAt',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    enum: ['asc', 'desc'],
+    example: 'desc',
+    description: 'Sort order. Default is desc',
+  })
   @HttpCode(HttpStatus.OK)
   async getAllContact(@Req() req: Request) {
     const filters = pick(req.query, [
@@ -56,6 +128,12 @@ export class ContactController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get single contact by id' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '67d3f5d5a3c1c82c1d123456',
+  })
   @HttpCode(HttpStatus.OK)
   async getSingleContact(@Param('id') id: string) {
     const result = await this.contactService.getSingleContact(id);
