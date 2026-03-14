@@ -1,5 +1,20 @@
-import { Controller, Post, Body, UseGuards, Req, Get, HttpCode, HttpStatus } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Req,
+  Get,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { PaymentService } from './payment.service';
 import { CreateCheckoutDto } from './dto/create-payment.dto';
 import AuthGuard from 'src/app/middlewares/auth.guard';
@@ -23,14 +38,57 @@ export class PaymentController {
   @UseGuards(AuthGuard('user', 'admin'))
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth('access-token')
-  @ApiOperation({ summary: 'Retrieve all payments for the authenticated user or admin' })
-  @ApiQuery({ name: 'searchTerm', required: false, type: String, description: 'Search term for filtering payments' })
-  @ApiQuery({ name: 'status', required: false, type: String, description: 'Status filter for payments' })
-  @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number for pagination' })
-  @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Number of items per page' })
-  @ApiQuery({ name: 'sortBy', required: false, type: String, description: 'Field to sort by' })
-  @ApiQuery({ name: 'sortOrder', required: false, type: String, description: 'Sort order (asc or desc)' })
-  @ApiResponse({ status: 200, description: 'Payments retrieved successfully', schema: { type: 'object', properties: { message: { type: 'string' }, meta: { type: 'object' }, data: { type: 'array' } } } })
+  @ApiOperation({
+    summary: 'Retrieve all payments for the authenticated user or admin',
+  })
+  @ApiQuery({
+    name: 'searchTerm',
+    required: false,
+    type: String,
+    description: 'Search term for filtering payments',
+  })
+  @ApiQuery({
+    name: 'status',
+    required: false,
+    type: String,
+    description: 'Status filter for payments',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number for pagination',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Number of items per page',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    type: String,
+    description: 'Field to sort by',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    type: String,
+    description: 'Sort order (asc or desc)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Payments retrieved successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+        meta: { type: 'object' },
+        data: { type: 'array' },
+      },
+    },
+  })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   async getAll(@Req() req: Request) {
