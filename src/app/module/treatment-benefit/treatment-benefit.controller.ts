@@ -11,7 +11,13 @@ import {
   Req,
   Put,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { TreatmentBenefitService } from './treatment-benefit.service';
 import { CreateTreatmentBenefitDto } from './dto/create-treatment-benefit.dto';
 import { UpdateTreatmentBenefitDto } from './dto/update-treatment-benefit.dto';
@@ -43,6 +49,66 @@ export class TreatmentBenefitController {
   }
 
   @Get()
+  @ApiOperation({
+    summary:
+      'Get all treatment benefits with search, filters, pagination, and sorting',
+  })
+  @ApiQuery({
+    name: 'searchTerm',
+    required: false,
+    type: String,
+    example: 'hair',
+    description: 'Search by title, description, or category',
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+    example: 'Hair Benefit',
+    description: 'Filter by exact name field if stored in data',
+  })
+  @ApiQuery({
+    name: 'description',
+    required: false,
+    type: String,
+    example: 'Improves scalp condition',
+    description: 'Filter by exact description value',
+  })
+  @ApiQuery({
+    name: 'category',
+    required: false,
+    type: String,
+    example: 'hair-care',
+    description: 'Filter by exact category',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    example: 1,
+    description: 'Page number. Default is 1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    example: 10,
+    description: 'Items per page. Default is 10',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    required: false,
+    type: String,
+    example: 'createdAt',
+    description: 'Sort field. Default is createdAt',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    enum: ['asc', 'desc'],
+    example: 'desc',
+    description: 'Sort order. Default is desc',
+  })
   async getAllTreatmentBenefit(@Req() req: Request) {
     const filters = pick(req.query, [
       'searchTerm',
@@ -64,6 +130,12 @@ export class TreatmentBenefitController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get single treatment benefit by id' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '67d3f5d5a3c1c82c1d123456',
+  })
   async getSingleTreatmentBenefit(@Param('id') id: string) {
     const result =
       await this.treatmentBenefitService.getSingleTreatmentBenefit(id);
