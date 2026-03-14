@@ -104,6 +104,7 @@ export class ProductController {
       'description',
       'whatWillYouGet',
       'size',
+      'category',
     ]);
     const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
     const result = await this.productService.getAllProduct(filters, options);
