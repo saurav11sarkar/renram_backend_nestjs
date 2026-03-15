@@ -15,6 +15,7 @@ import { ReviewModule } from './app/module/review/review.module';
 import { TreatmentResponseModule } from './app/module/treatment-response/treatment-response.module';
 import { DashboardModule } from './app/module/dashboard/dashboard.module';
 import { TreatmentBenefitModule } from './app/module/treatment-benefit/treatment-benefit.module';
+import { AddtocartModule } from './app/module/addtocart/addtocart.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { TreatmentBenefitModule } from './app/module/treatment-benefit/treatment
     TreatmentResponseModule,
     DashboardModule,
     TreatmentBenefitModule,
+    AddtocartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
