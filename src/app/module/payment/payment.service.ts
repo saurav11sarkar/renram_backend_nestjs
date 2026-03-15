@@ -143,4 +143,15 @@ export class PaymentService {
       },
     };
   }
+
+  async getSinglePayment(id: string) {
+    const result = await this.paymentModel
+      .findById(id)
+      .populate('user')
+      .populate('items.product');
+
+    if (!result) throw new HttpException('Payment not found', 404);
+
+    return result;
+  }
 }

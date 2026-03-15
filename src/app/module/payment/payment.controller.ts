@@ -7,6 +7,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -104,6 +105,16 @@ export class PaymentController {
       message: 'Payment retrieved successfully',
       meta: result.meta,
       data: result.data,
+    };
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async getSinglePayment(@Param('id') id: string) {
+    const reasult = await this.paymentService.getSinglePayment(id);
+    return {
+      message: 'Payment retrieved successfully',
+      data: reasult,
     };
   }
 }
