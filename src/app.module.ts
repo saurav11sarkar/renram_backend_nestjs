@@ -16,6 +16,7 @@ import { TreatmentResponseModule } from './app/module/treatment-response/treatme
 import { DashboardModule } from './app/module/dashboard/dashboard.module';
 import { TreatmentBenefitModule } from './app/module/treatment-benefit/treatment-benefit.module';
 import { AddtocartModule } from './app/module/addtocart/addtocart.module';
+import { NewsletterModule } from './app/module/newsletter/newsletter.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AddtocartModule } from './app/module/addtocart/addtocart.module';
     DashboardModule,
     TreatmentBenefitModule,
     AddtocartModule,
+    NewsletterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
