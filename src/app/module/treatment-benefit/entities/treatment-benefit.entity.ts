@@ -22,6 +22,15 @@ export class TreatmentBenefit {
         },
         options: { type: [String] },
         answare: { type: String },
+        optionWeights: {
+          type: [
+            {
+              label: { type: String },
+              score: { type: Number, min: 1, max: 7, default: 1 },
+            },
+          ],
+          default: [],
+        },
       },
     ],
     default: [],
@@ -30,6 +39,10 @@ export class TreatmentBenefit {
     question: string;
     options: string[];
     answare?: string;
+    optionWeights?: {
+      label: string;
+      score: number;
+    }[];
   }[];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })

@@ -26,6 +26,8 @@ export class Product {
   @Prop({ type: [String], default: [] })
   image: string[];
 
+
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   createBy: Types.ObjectId;
 

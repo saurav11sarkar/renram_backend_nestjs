@@ -21,6 +21,17 @@ export class TreatmentResponseController {
     private readonly treatmentResponseService: TreatmentResponseService,
   ) {}
 
+  @Post('preview')
+  @HttpCode(HttpStatus.OK)
+  async preview(@Body() dto: CreateTreatmentResponseDto) {
+    const result = await this.treatmentResponseService.previewResponse(dto);
+
+    return {
+      message: 'Treatment benefit preview generated successfully',
+      data: result,
+    };
+  }
+
   @Post()
   @UseGuards(AuthGuard('user'))
   @ApiBearerAuth('access-token')

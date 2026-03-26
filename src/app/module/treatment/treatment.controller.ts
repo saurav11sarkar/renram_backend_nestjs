@@ -54,28 +54,28 @@ export class TreatmentController {
     name: 'searchTerm',
     required: false,
     type: String,
-    example: 'hair',
+    example: '',
     description: 'Search by treatment name, description, or category',
   })
   @ApiQuery({
     name: 'name',
     required: false,
     type: String,
-    example: 'Hair Treatment',
+    example: '',
     description: 'Filter by exact treatment name',
   })
   @ApiQuery({
     name: 'description',
     required: false,
     type: String,
-    example: 'healthy scalp',
+    example: '',
     description: 'Filter by exact description value',
   })
   @ApiQuery({
     name: 'category',
     required: false,
     type: String,
-    example: 'hair-care',
+    example: '',
     description: 'Filter by exact category',
   })
   @ApiQuery({
@@ -96,7 +96,7 @@ export class TreatmentController {
     name: 'sortBy',
     required: false,
     type: String,
-    example: 'createdAt',
+    example: '',
     description: 'Sort field. Default is createdAt',
   })
   @ApiQuery({

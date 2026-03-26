@@ -2,10 +2,26 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsMongoId,
+  IsNotEmpty,
+  IsNumber,
   IsOptional,
+  Max,
+  Min,
   IsString,
   ValidateNested,
 } from 'class-validator';
+
+export class TreatmentQuestionOptionDto {
+  @IsString()
+  @IsNotEmpty()
+  label: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  @Max(7)
+  score?: number;
+}
 
 export class TreatmentQuestionDto {
   @IsString()
@@ -18,6 +34,12 @@ export class TreatmentQuestionDto {
   @IsOptional()
   @IsString()
   answare?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TreatmentQuestionOptionDto)
+  optionWeights?: TreatmentQuestionOptionDto[];
 }
 
 export class CreateTreatmentBenefitDto {

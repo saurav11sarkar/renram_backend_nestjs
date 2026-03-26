@@ -44,9 +44,16 @@ export class ProductController {
   @ApiBody({
     schema: {
       type: 'object',
-      required: ['name', 'description', 'price'],
+      required: [
+        'name',
+        'category',
+        'description',
+        'whatWillYouGet',
+        'price',
+      ],
       properties: {
         name: { type: 'string', example: 'Hair Growth Oil' },
+        category: { type: 'string', example: 'sexual-health' },
         description: {
           type: 'string',
           example: 'Supports healthy hair growth and scalp care',
@@ -140,7 +147,7 @@ export class ProductController {
     name: 'category',
     required: false,
     type: String,
-    example: 'hair-care',
+    example: 'sexual-health',
     description: 'Filter by exact category',
   })
   @ApiQuery({
@@ -216,6 +223,7 @@ export class ProductController {
       type: 'object',
       properties: {
         name: { type: 'string', example: 'Hair Growth Oil' },
+        category: { type: 'string', example: 'sexual-health' },
         description: {
           type: 'string',
           example: 'Updated product description',

@@ -1,4 +1,5 @@
 import {
+  ArrayMinSize,
   IsArray,
   IsMongoId,
   IsOptional,
@@ -23,9 +24,10 @@ export class CreateTreatmentResponseDto {
   // Keep accepting the legacy field name to avoid breaking existing clients.
   @IsOptional()
   @IsMongoId()
-  treatment: string;
+  treatment?: string;
 
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => AnswerDto)
   answers: AnswerDto[];

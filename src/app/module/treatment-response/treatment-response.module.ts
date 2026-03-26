@@ -11,11 +11,15 @@ import {
   TreatmentBenefit,
   TreatmentBenefitSchema,
 } from '../treatment-benefit/entities/treatment-benefit.entity';
+import { Treatment, TreatmentSchema } from '../treatment/entities/treatment.entity';
+import { Product, ProductSchema } from '../product/entities/product.entity';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: TreatmentBenefit.name, schema: TreatmentBenefitSchema },
+      { name: Treatment.name, schema: TreatmentSchema },
+      { name: Product.name, schema: ProductSchema },
       { name: TreatmentResponse.name, schema: TreatmentResponseSchema },
       { name: User.name, schema: UserSchema },
     ]),

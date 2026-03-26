@@ -8,9 +8,14 @@ export class TreatmentResponse {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TreatmentBenefit',
-    required: true,
   })
-  treatmentBenefit: Types.ObjectId;
+  treatmentBenefit?: Types.ObjectId;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Treatment',
+  })
+  treatment?: Types.ObjectId;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -24,8 +29,8 @@ export class TreatmentResponse {
       {
         question: { type: String },
         selectedAnswer: { type: String },
-        correctAnswer: { type: String },
-        isCorrect: { type: Boolean },
+        score: { type: Number, default: 0 },
+        matchLevel: { type: String },
       },
     ],
     default: [],
@@ -33,21 +38,40 @@ export class TreatmentResponse {
   answers: {
     question: string;
     selectedAnswer: string;
-    correctAnswer: string;
-    isCorrect: boolean;
+    score: number;
+    matchLevel: string;
   }[];
 
   @Prop({ default: 0 })
   totalQuestions: number;
 
   @Prop({ default: 0 })
-  correctCount: number;
+  totalScore: number;
 
   @Prop({ default: 0 })
-  wrongCount: number;
+  averageScore: number;
+
+  @Prop({ default: 0 })
+  matchPercentage: number;
 
   @Prop({ default: false })
   isCompleted: boolean;
+
+  @Prop({
+    type: {
+      level: { type: String },
+      statusBadge: { type: String },
+      title: { type: String },
+      text: { type: String },
+    },
+    default: null,
+  })
+  resultSummary: {
+    level: string;
+    statusBadge: string;
+    title: string;
+    text: string;
+  };
 }
 
 export const TreatmentResponseSchema =
