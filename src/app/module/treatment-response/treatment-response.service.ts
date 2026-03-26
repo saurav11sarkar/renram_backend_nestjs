@@ -102,14 +102,18 @@ export class TreatmentResponseService {
       .toLowerCase();
 
     const weightedOption = questionData?.optionWeights?.find(
-      (option) => option.label.trim().toLowerCase() === normalizedAnswer,
+      (option) =>
+        this.normalizeSelectedAnswer(option.label).toLowerCase() ===
+        normalizedAnswer,
     );
 
     if (weightedOption?.score) {
       return weightedOption.score;
     }
 
-    const highestPriorityAnswer = questionData?.answare?.trim().toLowerCase();
+    const highestPriorityAnswer = questionData?.answare
+      ? this.normalizeSelectedAnswer(questionData.answare).toLowerCase()
+      : undefined;
     if (highestPriorityAnswer && highestPriorityAnswer === normalizedAnswer) {
       return 7;
     }
@@ -260,6 +264,7 @@ export class TreatmentResponseService {
       totalQuestions: evaluation.totalQuestions,
       totalScore: evaluation.totalScore,
       averageScore: evaluation.averageScore,
+      matchPercentage: evaluation.matchPercentage,
       resultSummary: evaluation.resultSummary,
       isCompleted: true,
     });
