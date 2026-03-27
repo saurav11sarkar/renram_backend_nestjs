@@ -13,9 +13,9 @@ export class CreateProductDto {
   @IsNotEmpty({ message: 'Product name is required' })
   name: string;
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty({ message: 'Product category is required' })
-  category: string;
+  category: string[];
 
   @IsString()
   @IsNotEmpty({ message: 'Product description is required' })

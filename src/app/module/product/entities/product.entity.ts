@@ -9,7 +9,7 @@ export class Product {
   name: string;
 
   @Prop({ required: true })
-  category: string;
+  category: string[];
 
   @Prop({ required: true, trim: true })
   description: string;
