@@ -35,10 +35,15 @@ export default {
     secretKey: process.env.STRIPE_SECRET_KEY,
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   },
+  aiAgent:
+    process.env.AI_AGENT || process.env.AI_AGENT_KEY || process.env.ai_agent,
   frontendUrl: process.env.FRONTEND_URL,
   rateLimit: {
     window: process.env.RATE_LIMIT_WINDOW,
     max: process.env.RATE_LIMIT_MAX,
     delay: process.env.RATE_LIMIT_DELAY,
+  },
+  ai: {
+    apiKey: process.env.AI_AGENT_KEY,
   },
 };
